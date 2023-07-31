@@ -1,0 +1,15 @@
+{
+  "name": "cis_devsecops_demo",
+  "version": "1.0.0",
+  "description": "A vulnerable NodeJS app to demonstrate secure container mangement practices according CIS Docker Benchmark",
+  "author": "Anjum Rashid <anjum.stu2016@juniv.edu>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "request": "^2.88.2"
+  }
+}
