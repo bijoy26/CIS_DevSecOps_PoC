@@ -5,8 +5,7 @@
   "author": "Anjum Rashid <anjum.stu2016@juniv.edu>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "test": "jest"
+    "start": "node server.js"
   },
   "dependencies": {
     "express": "^4.16.1",
