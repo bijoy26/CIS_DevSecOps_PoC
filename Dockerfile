@@ -1,6 +1,6 @@
 FROM mhart/alpine-node:12
 
-RUN apk add --no-cache openssh 
+RUN apk add --no-cache openrc openssh 
 # Create app directory
 WORKDIR /usr/src/app
 
@@ -24,7 +24,10 @@ RUN chmod o-rwx /etc/passwd
 
 COPY ./sshd_config /etc/ssh/sshd_config
 
-RUN service sshd start
+RUN rc-status \
+    # touch softlevel because system was initialized without openrc
+    && touch /run/openrc/softlevel \
+    && rc-service sshd start
 
 EXPOSE 8080
 EXPOSE 2222
