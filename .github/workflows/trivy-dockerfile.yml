@@ -13,11 +13,10 @@ jobs:
         run: |
           wget https://github.com/aquasecurity/trivy/releases/download/v0.18.3/trivy_0.18.3_Linux-64bit.deb && sudo dpkg -i trivy_0.18.3_Linux-64bit.deb
       - name: Checkout code
-        uses: actions/checkout@v3
-      # - name: Run Trivy configuration scan in Dockerfile 
+        uses: actions/checkout@v3 
       - shell: bash
         run: |
-          trivy conf ./Dockerfile
+          trivy conf Dockerfile
       # - name: Run Trivy vulnerability scanner in IaC mode
       #   uses: aquasecurity/trivy-action@master
       #   with:
