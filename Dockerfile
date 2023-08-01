@@ -24,7 +24,7 @@ RUN chmod o-rwx /etc/passwd
 
 COPY ./sshd_config /etc/ssh/sshd_config
 
-RUN service ssh start
+RUN service sshd start
 
 EXPOSE 8080
 EXPOSE 2222
