@@ -27,6 +27,6 @@ COPY ./sshd_config /etc/ssh/sshd_config
 RUN service ssh start
 
 EXPOSE 8080
-EXPOSE 22
+EXPOSE 2222
 
 CMD [ "node", "server.js" ]
