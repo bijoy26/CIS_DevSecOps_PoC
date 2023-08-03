@@ -13,6 +13,7 @@ jobs:
       - shell: bash
         run: |
           trivy config Dockerfile
+          trivy config Dockerfile.vuln
       # - name: Run Trivy vulnerability scanner in IaC mode
       #   uses: aquasecurity/trivy-action@master
       #   with:
