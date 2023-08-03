@@ -1,4 +1,4 @@
-name: Trivy & Docker Scout Scan
+name: CI/CD - Static & Dynamic Analysis
 on:
   workflow_dispatch:
 jobs:
@@ -28,7 +28,7 @@ jobs:
           key: ${{ secrets._SSHKEY }}
           overwrite: true
           source: "*.txt"
-          target: /home/cseju/reports
+          target: /home/cseju/reports/static-analysis
 
   docker-scout-image-scan:
     runs-on: ubuntu-latest
@@ -62,7 +62,7 @@ jobs:
           key: ${{ secrets._SSHKEY }}
           overwrite: true
           source: "*.txt"
-          target: /home/cseju/reports
+          target: /home/cseju/reports/static-analysis
 
   CD-with-dynamic-analysis:
     needs: [trivy-IaC-scan, docker-scout-image-scan]
@@ -80,6 +80,4 @@ jobs:
             cd /home/cseju/cis-demo-tools/docker-bench-security/ && unbuffer sudo sh docker-bench-security.sh | tee /home/cseju/reports/dynamic-analysis/cis-benchmark-report.txt
             sudo cat /etc/shadow > /dev/null
             unbuffer sudo journalctl _COMM=falco -p warning -l --no-pager | tee /home/cseju/reports/dynamic-analysis/falco-events.log >/dev/null 2>&1
-      # - shell: bash
-      #   run: |
-      #     curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh && sh install-scout.sh && sudo apt-get install expect-dev
+   
