@@ -1,4 +1,4 @@
-FROM mhart/alpine-node:12
+FROM node:12.22.11-alpine
 
 RUN apk add --no-cache openrc openssh 
 # Create app directory
