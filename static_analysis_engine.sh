@@ -34,4 +34,9 @@ echo -e "\n        ${Green} ✅ BASE IMAGE CHECKER PROCESS SENT TO BACKGROUND �
 echo -e "\n        ${Yellow} ⭐ EXECUTING Dockerfile CHECKER ⭐ ${NC}"
 unbuffer trivy -q conf ${DOCKERFILE_PATH} | tee ${OUTPUT_DIR}/dockerfile_fix_vulncont.txt >/dev/null 2>&1
 echo -e "\n        ${Green} ✅ Dockerfile Fix Report Generated ✅'${NC}"
-## falco stuff here ##
+
+## add container image vulnerability scan results here -> for CI 
+
+## add docker-bench-security (CIS v1.5.0 compliant) results here -> For Deployment Server
+
+## falco stuff here -> For Deployment Server
