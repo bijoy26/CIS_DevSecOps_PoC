@@ -29,7 +29,7 @@ jobs:
           overwrite: true
           source: "*.txt"
           target: /home/cseju/reports
-          
+
   docker-scout-image-scan:
     runs-on: ubuntu-latest
     steps:
@@ -63,3 +63,21 @@ jobs:
           overwrite: true
           source: "*.txt"
           target: /home/cseju/reports
+
+  docker-continuous-deployment-w/-dynamic-analysis:
+    needs: [docker-scout-image-scan, docker-scout-image-scan]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy container & perform dynamic analysis
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets._SSHHOST }}
+          username: ${{ secrets._SSHUSERNAME }}
+          key: ${{ secrets._SSHKEY }}
+          port: ${{ secrets._SSHPORT }}
+          script: |
+            ls -al
+            docker run -d -it -p 2222:2222  bijoy26/cis-devsecops:bumped
+      # - shell: bash
+      #   run: |
+      #     curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh && sh install-scout.sh && sudo apt-get install expect-dev
