@@ -1,0 +1,27 @@
+name: Docker Scout Image Scan
+on:
+  workflow_dispatch:
+
+jobs:
+  docker-scout-image-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh && sh install-scout.sh
+ 
+      - shell: bash
+        run: |
+          touch base_image_recommendations_report_cis_devsecops[ACTIONS].txt 
+          unbuffer docker scout recommendations bijoy26/cis-devsecops:test | tee base_image_recommendations_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1          
+   
+      - name: Push reports to Deployment Server 
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets._SSHHOST }}
+          username: ${{ secrets._SSHUSERNAME }}
+          port: ${{ secrets._SSHPORT }}
+          key: ${{ secrets._SSHKEY }}
+          overwrite: true
+          source: "*.txt"
+          target: /home/cseju/reports
