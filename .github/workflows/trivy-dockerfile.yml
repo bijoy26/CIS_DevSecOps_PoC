@@ -13,7 +13,7 @@ jobs:
       - shell: bash
         run: |
           trivy config Dockerfile
-          unbuffer trivy config Dockerfile | tee /tmp/reports/dockerfile_report_cis_devsecops.txt >/dev/null 2>&1
+          unbuffer trivy config Dockerfile | tee /tmp/reports/dockerfile_report_cis_devsecops.txt
       # - name: Run Trivy vulnerability scanner in IaC mode
       #   uses: aquasecurity/trivy-action@master
       #   with:
