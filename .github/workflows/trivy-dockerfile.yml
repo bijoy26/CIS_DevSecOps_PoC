@@ -8,14 +8,16 @@ jobs:
       - shell: bash
         run: |
           wget https://github.com/aquasecurity/trivy/releases/download/v0.43.1/trivy_0.43.1_Linux-64bit.deb && sudo dpkg -i trivy_0.43.1_Linux-64bit.deb && sudo apt-get install expect-dev
+    
       - name: Checkout code
         uses: actions/checkout@v3 
+   
       - shell: bash
         run: |
-          mkdir /tmp/reports/ 
           touch dockerfile_report_cis_devsecops[ACTIONS].txt dockerfile_report_ubuntu_bionic[ACTIONS].txt
-          unbuffer trivy -q config Dockerfile | tee ACTIONS_dockerfile_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
-          unbuffer trivy -q config Dockerfile | tee ACTIONS_dockerfile_report_ubuntu_bionic[ACTIONS].txt >/dev/null 2>&1
+          unbuffer trivy -q config Dockerfile | tee dockerfile_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer trivy -q config Dockerfile.vuln | tee dockerfile_report_ubuntu_bionic[ACTIONS].txt >/dev/null 2>&1
+   
       - name: Push reports to Deployment Server 
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -25,4 +27,4 @@ jobs:
           key: ${{ secrets._SSHKEY }}
           overwrite: true
           source: "*.txt"
-          target: /home/cseju/cis-demo-tools/reports/dump_from_actions
+          target: /home/cseju/reports
