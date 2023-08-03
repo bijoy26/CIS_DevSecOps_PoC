@@ -64,7 +64,7 @@ jobs:
           source: "*.txt"
           target: /home/cseju/reports
 
-  docker-continuous-deployment-w/-dynamic-analysis:
+  docker-continuous-deployment-with-dynamic-analysis:
     needs: [docker-scout-image-scan, docker-scout-image-scan]
     runs-on: ubuntu-latest
     steps:
