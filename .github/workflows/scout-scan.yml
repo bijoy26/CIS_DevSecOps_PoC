@@ -22,8 +22,10 @@ jobs:
       - shell: bash
         run: |
           touch base_image_recommendations_report_cis_devsecops[ACTIONS].txt 
-          unbuffer docker scout recommendations bijoy26/cis-devsecops:bumped | tee base_image_recommendations_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1 &    
-   
+          unbuffer docker scout recommendations bijoy26/cis-devsecops:bumped | tee base_image_recommendations_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer docker scout quickview bijoy26/cis-devsecops:bumped | tee image_quickview_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer docker scout cves --ignore-base --only-severity critical,high bijoy26/cis-devsecops:bumped | tee image_vuln_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+      
       - name: Push reports to Deployment Server 
         uses: appleboy/scp-action@v0.1.4
         with:
