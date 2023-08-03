@@ -12,9 +12,11 @@ jobs:
         uses: actions/checkout@v3 
       - shell: bash
         run: |
-          trivy config Dockerfile
-          mkdir /tmp/reports/ && touch /tmp/reports/dockerfile_report_cis_devsecops.txt
-          unbuffer trivy config Dockerfile | tee /tmp/reports/dockerfile_report_cis_devsecops.txt >/dev/null 2>&1
+          mkdir /tmp/reports/ 
+          touch /tmp/reports/dockerfile_report_cis_devsecops[ACTIONS].txt /tmp/reports/dockerfile_report_ubuntu_bionic[ACTIONS].txt
+          unbuffer trivy -q config Dockerfile | tee /tmp/reports/ACTIONS_dockerfile_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer trivy -q config Dockerfile | tee /tmp/reports/ACTIONS_dockerfile_report_ubuntu_bionic[ACTIONS].txt >/dev/null 2>&1
+          cat /tmp/reports/ACTIONS_dockerfile_report_ubuntu_bionic[ACTIONS].txt
       # - name: Run Trivy vulnerability scanner in IaC mode
       #   uses: aquasecurity/trivy-action@master
       #   with:
