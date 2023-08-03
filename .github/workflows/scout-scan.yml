@@ -10,6 +10,9 @@ jobs:
         run: |
           curl -fsSL https://raw.githubusercontent.com/docker/scout-cli/main/install.sh -o install-scout.sh && sh install-scout.sh && sudo apt-get install expect-dev
  
+      - name: Checkout code
+        uses: actions/checkout@v3 
+
       - shell: bash
         run: |
           touch base_image_recommendations_report_cis_devsecops[ACTIONS].txt 
