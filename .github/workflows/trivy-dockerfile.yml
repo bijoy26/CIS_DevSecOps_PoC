@@ -1,4 +1,4 @@
-name: Trivy Scan
+name: Trivy & Docker Scout Scan
 on:
   workflow_dispatch:
 jobs:
