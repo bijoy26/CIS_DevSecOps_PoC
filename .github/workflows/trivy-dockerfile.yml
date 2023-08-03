@@ -16,19 +16,12 @@ jobs:
           touch /tmp/reports/dockerfile_report_cis_devsecops[ACTIONS].txt /tmp/reports/dockerfile_report_ubuntu_bionic[ACTIONS].txt
           unbuffer trivy -q config Dockerfile | tee /tmp/reports/ACTIONS_dockerfile_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
           unbuffer trivy -q config Dockerfile | tee /tmp/reports/ACTIONS_dockerfile_report_ubuntu_bionic[ACTIONS].txt >/dev/null 2>&1
-          cat /tmp/reports/ACTIONS_dockerfile_report_ubuntu_bionic[ACTIONS].txt
-      # - name: Run Trivy vulnerability scanner in IaC mode
-      #   uses: aquasecurity/trivy-action@master
-      #   with:
-      #     scan-type: 'config'
-      #     hide-progress: false
-      #     format: 'sarif'
-      #     output: 'trivy-results.sarif'
-      #     exit-code: '1'
-      #     ignore-unfixed: true
-      #     severity: 'CRITICAL,HIGH'
-
-      # - name: Upload Trivy scan results to GitHub Security tab
-      #   uses: github/codeql-action/upload-sarif@v2
-      #   with:
-      #     sarif_file: 'trivy-results.sarif'
+      - name: Push reports to Deployment Server 
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets._SSHHOST }}
+          username: ${{ secrets._SSHUSERNAME }}
+          port: ${{ secrets._SSHPORT }}
+          key: ${{ secrets._SSHKEY }}
+          source: "/tmp/reports/*.txt"
+          target: /home/cseju/cis-demo-tools/reports/dump_from_actions
