@@ -13,9 +13,9 @@ jobs:
       - shell: bash
         run: |
           mkdir /tmp/reports/ 
-          touch /tmp/reports/dockerfile_report_cis_devsecops[ACTIONS].txt /tmp/reports/dockerfile_report_ubuntu_bionic[ACTIONS].txt
-          unbuffer trivy -q config Dockerfile | tee /tmp/reports/ACTIONS_dockerfile_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
-          unbuffer trivy -q config Dockerfile | tee /tmp/reports/ACTIONS_dockerfile_report_ubuntu_bionic[ACTIONS].txt >/dev/null 2>&1
+          touch dockerfile_report_cis_devsecops[ACTIONS].txt dockerfile_report_ubuntu_bionic[ACTIONS].txt
+          unbuffer trivy -q config Dockerfile | tee ACTIONS_dockerfile_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer trivy -q config Dockerfile | tee ACTIONS_dockerfile_report_ubuntu_bionic[ACTIONS].txt >/dev/null 2>&1
       - name: Push reports to Deployment Server 
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -23,5 +23,6 @@ jobs:
           username: ${{ secrets._SSHUSERNAME }}
           port: ${{ secrets._SSHPORT }}
           key: ${{ secrets._SSHKEY }}
-          source: "/tmp/reports/*.txt"
+          overwrite: true
+          source: "*.txt"
           target: /home/cseju/cis-demo-tools/reports/dump_from_actions
