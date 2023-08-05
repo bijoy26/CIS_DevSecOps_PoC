@@ -23,6 +23,7 @@ The system proposes a DevSecOps framework leveraging static analysis and dynamic
     1. Dockerfile scan (Trivy)
 	2. Docker Image scan (docker scout)
         - Quickview report
+        - Base image report
 	    - CVE report
    > _💡 NOTE: After CI run, Docker Image is available Docker Hub_
 2. **Continuous Deployment - Dynamic analysis**
@@ -40,6 +41,7 @@ The system proposes a DevSecOps framework leveraging static analysis and dynamic
         - Prepare Workflow 
         - Prepare Deployment Server
     - How to integrate this in your own pipeline 
+    - IDEA: Add a custom badge for Azure VM health-check
 -->
 
 ## Courtesy
