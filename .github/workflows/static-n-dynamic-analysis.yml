@@ -49,9 +49,9 @@ jobs:
       - shell: bash
         run: |
           touch base_image_report_cis_devsecops[ACTIONS].txt 
-          unbuffer docker scout recommendations bijoy26/cis-devsecops:bumped | tee base_image_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
-          unbuffer docker scout quickview bijoy26/cis-devsecops:bumped | tee image_quickview_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
-          unbuffer docker scout cves --ignore-base --only-severity critical,high bijoy26/cis-devsecops:bumped | tee image_vuln_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer docker scout recommendations bijoy26/cis-devsecops:demo | tee base_image_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer docker scout quickview bijoy26/cis-devsecops:demo | tee image_quickview_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
+          unbuffer docker scout cves --ignore-base --only-severity critical,high bijoy26/cis-devsecops:demo | tee image_vuln_report_cis_devsecops[ACTIONS].txt >/dev/null 2>&1
       
       - name: Push reports to Deployment Server 
         uses: appleboy/scp-action@v0.1.4
@@ -68,7 +68,7 @@ jobs:
     needs: [trivy-IaC-scan, docker-scout-image-scan]
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy container & perform dynamic analysis
+      - name: Deploy container & perform dynamic analysisf
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets._SSHHOST }}
@@ -76,7 +76,7 @@ jobs:
           key: ${{ secrets._SSHKEY }}
           port: ${{ secrets._SSHPORT }}
           script: |
-            docker run -d -it -p 2222:2222  bijoy26/cis-devsecops:bumped
+            docker run -d -it -p 2222:2222  bijoy26/cis-devsecops:demo
             cd /home/cseju/cis-demo-tools/docker-bench-security/ && unbuffer sudo sh docker-bench-security.sh | tee /home/cseju/reports/dynamic-analysis/cis-benchmark-report.txt
             sudo cat /etc/shadow > /dev/null
             unbuffer sudo journalctl _COMM=falco -p warning -l --no-pager | tee /home/cseju/reports/dynamic-analysis/falco-events.log >/dev/null 2>&1
