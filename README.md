@@ -17,6 +17,12 @@ The system proposes a DevSecOps framework leveraging static analysis and dynamic
 ![System Arch](static-assets/architecture.png)
 
 
+
+## PoC Demo 
+[![PoC Demo](https://img.youtube.com/vi/6kvnvcG4Fdw/0.jpg)](https://youtu.be/6kvnvcG4Fdw)
+
+
+
 ## Workflow Sequence
 
 1. **Continuous Integration - Static analysis**
