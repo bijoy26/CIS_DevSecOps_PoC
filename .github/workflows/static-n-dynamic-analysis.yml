@@ -79,5 +79,4 @@ jobs:
             docker run -d -it -p 2222:2222  bijoy26/cis-devsecops:demo
             cd /home/cseju/cis-demo-tools/docker-bench-security/ && unbuffer sudo sh docker-bench-security.sh | tee /home/cseju/reports/dynamic-analysis/cis-benchmark-report.txt
             sudo cat /etc/shadow > /dev/null
-            unbuffer sudo journalctl _COMM=falco -p warning -l --no-pager | tee /home/cseju/reports/dynamic-analysis/falco-events.log >/dev/null 2>&1
    
